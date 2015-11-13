@@ -1,0 +1,10 @@
+Installing the Nao Native SDK with Visual Studio 2010:
+http://geekwithtoys.ca/2012/01/installing-the-native-sdk-with-visual-studio-2010/
+
+Python Programming your NAO Robot Tutorial Video 1 :
+https://www.youtube.com/watch?v=Djzb8c41qbk
+Python Programming your NAO Robot Tutorial Video 2 :
+https://www.youtube.com/watch?v=ykss9i1hjgo
+
+https://www.youtube.com/watch?v=Djzb8c41qbk
+https://www.youtube.com/watch?v=QAA6y_IKar8
