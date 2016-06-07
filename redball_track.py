@@ -9,23 +9,19 @@ from optparse import OptionParser
 
 Test = None
 
-class RedBallTracker():
-    pass
-
-
-class TestModule(ALModule):
-    # A simple module able to test broker
+class RedBallTrackerModule(ALModule):
     def __init__(self, name):
         ALModule.__init__(self, name)
 
-        # Create a proxy to ALTextToSpeech for later use
-        self.speech = ALProxy("ALTextToSpeech")
-        self.posture = ALProxy("ALRobotPosture")
         self.motion = ALProxy("ALMotion")
+        self.speech = ALProxy("ALTextToSpeech")
+        self.tracker = ALProxy("ALRedBallTracker")
 
-        self.posture.goToPosture("StandInit", 0.5)
-        self.speech.say("I'm going to move")
-        self.motion.moveTo(1, 0, 0)
+        self.motion.setStiffnesses("Head", 1.0)
+        self.tracker.startTracker()
+
+        print "Tracker started successfully, now show a ball to Nao!"
+        self.speech.say("Show a ball to me!")
 
 
 def main():
@@ -39,7 +35,7 @@ def main():
                       type="int")
     parser.set_defaults(
         ip="127.0.0.1",
-        port=55512)
+        port=9559)
 
     (opts, args_) = parser.parse_args()
     IP_ADDRESS = opts.ip
@@ -54,9 +50,9 @@ def main():
     # Warning: HumanGreeter must be a global variable
     # The name given to the constructor must be the name of the
     # variable
-    global Test
-    Test = TestModule("Test")
-
+    global RedBallTracker
+    RedBallTracker = RedBallTrackerModule("RedBallTracker")
+    
     try:
         while True:
             time.sleep(1)
