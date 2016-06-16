@@ -5,10 +5,10 @@ import sys
 
 import Actions
 
-# from naoqi import ALProxy
+from naoqi import ALProxy
 
 class Nao:
-    def __init__(self, ip="127.0.0.1", port="9559"):
+    def __init__(self, ip="127.0.0.1", port=9559):
         
         self.modules = {}
         self.actions = {}
@@ -16,7 +16,7 @@ class Nao:
         self.port = port
 
         self.module_names = ["Motion", "RobotPosture", "Tracker", "TextToSpeech"]
-        self.action_names = ["Say", "StandUp"]
+        self.action_names = ["Say", "StandUp", "Crouch", "PointAtTarget", "SitDown", "StartTracking", "StopTracking", "Move1"]
 
         self.fraction_max_speed = 0.8
         self.limit_distance = -0.12
@@ -30,8 +30,8 @@ class Nao:
 
     def init(self):
         for module_name in self.module_names:
-            # self.modules[module_name] = ALProxy("AL" + module_name, self.ip, self.port)
-            self.modules[module_name] = "AL" + module_name
+            self.modules[module_name] = ALProxy("AL" + module_name, self.ip, self.port)
+            # self.modules[module_name] = "AL" + module_name
 
         for action_name in self.action_names:
             module_name = "Actions.{0}".format(action_name) # Say => Actions.Say (nom de la classe => nom du module)
@@ -42,10 +42,10 @@ class Nao:
 
             self.actions[action_name] = action_class(self.modules) # Instanciation de la classe
 
-        # self.motion.wakeUp()
-        # self.tracker.registerTarget(self.tracker_target_name, self.tracker_target_size)
-        # self.tracker.setMode("Move")
-        # self.tracker.setRelativePosition([self.limit_distance, 0.0, 0.0, 0.1, 0.1, 0.3])
+        self.motion.wakeUp()
+        self.tracker.registerTarget(self.tracker_target_name, self.tracker_target_size)
+        self.tracker.setMode("Move")
+        self.tracker.setRelativePosition([self.limit_distance, 0.0, 0.0, 0.1, 0.1, 0.3])
 
         # if (self.verbose):
         #     self.say("Initiliazing")
@@ -80,7 +80,7 @@ class Nao:
             except KeyError:
                 raise AttributeError(attribute_name)
         
-    def execute(self, string):
+    def execute(self, string=""):
         function = string.split(" ")[0] # Le nom de la fonction est ce qu'il y a avant le premier espace
         
         args = string[len(function + " "):] # On retire le nom de la fonction
@@ -98,10 +98,14 @@ class Nao:
     
 
 if __name__ == '__main__':
-    nao = Nao()
+    nao = Nao("192.168.0.2")
     nao.init()
 
-    nao.execute("Say hello")
-    nao.execute("StandUp 1")
+    # nao.execute("Say hello")
+    nao.standUp(None)
+    # nao.startTracking(None)
+    # nao.move1(None)
+    nao.stopTracking(None)
 
-    nao.say("Hello")
+    # nao.say("Hello")
+    # nao.crouch("")

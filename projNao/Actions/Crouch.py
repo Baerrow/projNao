@@ -5,7 +5,7 @@ class Crouch(Action):
 		return ["RobotPosture"]
 
 	def execute(self, *args):
-		fraction_max_speed = float(args[0])
+		fraction_max_speed = 0.8
 		
-		# self.robotPosture.goToPosture("Crouch", fraction_max_speed)
+		self.robotPosture.goToPosture("Crouch", fraction_max_speed)
 		print "I'm crouching at {0} speed".format(fraction_max_speed)

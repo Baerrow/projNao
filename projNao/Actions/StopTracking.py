@@ -5,5 +5,5 @@ class StopTracking(Action):
 		return ["Tracker"]
 
 	def execute(self, *args):
-		# self.tracker.stopTracker()
+		self.tracker.stopTracker()
 		print "I stopped tracking"

@@ -6,5 +6,6 @@ class Say(Action):
 
 	def execute(self, *args):
 		text = args[0]
-		# self.textToSpeech.say(text)
+		
+		self.textToSpeech.say(text)
 		print text
